@@ -416,7 +416,7 @@ function InvitationPopover() {
 
           <div style={{ marginBottom: 18, fontSize: 15, lineHeight: 1.5, color: "#d4d4d4" }}>
             <p style={{ margin: 0 }}>
-              Rua Gentil Bitterncourt 954
+              Rua Gentil Bittencourt 954
               <br />
               Apartamento 201
               <br />
@@ -754,9 +754,9 @@ export default function DistortHero() {
               textShadow: "0 0 10px rgba(255, 0, 0, 0.5), 2px 0 #00ffff, -2px 0 #ff0000",
             }}
           >
-            {">"} Sabado, 21 de Marco {"<"}
+            {">"} Sábado, 21 de Março {"<"}
             <br />
-            {">"} as 12h30 {"<"}
+            {">"} às 12h30 {"<"}
           </p>
 
           <div ref={buttonRef} style={{ display: "flex", justifyContent: "center" }}>
