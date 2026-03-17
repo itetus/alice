@@ -701,6 +701,16 @@ export default function DistortHero() {
       />
 
       <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          zIndex: 12,
+          pointerEvents: "none",
+          background: "rgba(0, 0, 0, 0.45)",
+        }}
+      />
+
+      <div
         ref={heroRef}
         style={{
           position: "absolute",
