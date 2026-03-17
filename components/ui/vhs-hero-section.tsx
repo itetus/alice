@@ -766,13 +766,13 @@ export default function DistortHero() {
       </div>
 
       <div style={{ position: "absolute", top: 32, left: 32, zIndex: 30 }}>
-        <div style={{ fontFamily: "'Courier New', monospace", fontSize: 12, letterSpacing: "0.16em", color: "#dcdcdc" }}>
+        <div style={{ fontFamily: "'Courier New', monospace", fontSize: 14, letterSpacing: "0.16em", color: "#ffffff" }}>
           {">"} CONVITE
         </div>
       </div>
 
       <div style={{ position: "absolute", top: 32, right: 32, zIndex: 30 }}>
-        <div style={{ fontFamily: "'Courier New', monospace", fontSize: 12, letterSpacing: "0.16em", color: "#c5e9ee" }}>
+        <div style={{ fontFamily: "'Courier New', monospace", fontSize: 14, letterSpacing: "0.16em", color: "#e4eff0" }}>
           2026 {"<"}
         </div>
       </div>
