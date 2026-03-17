@@ -2,14 +2,19 @@
 
 import { gsap } from "gsap"
 import { Canvas, useFrame } from "@react-three/fiber"
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { forwardRef, useCallback, useEffect, useMemo, useRef, useState, type ButtonHTMLAttributes } from "react"
+import { ArrowUpRight } from "lucide-react"
 import type { Points } from "three"
 import type { ShaderMaterial } from "three"
 import type * as THREE from "three"
 
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/base-popover"
+
 interface DistortionBackgroundProps {
   mousePosition: { x: number; y: number }
 }
+
+const googleMapsHref = "https://maps.app.goo.gl/sTCUSbF95sVw11W97"
 
 function DistortionBackground({ mousePosition }: DistortionBackgroundProps) {
   const meshRef = useRef<THREE.Mesh>(null)
@@ -305,14 +310,24 @@ function GlitchText({
   )
 }
 
-function VhsButton() {
+const VhsTriggerButton = forwardRef<HTMLButtonElement, ButtonHTMLAttributes<HTMLButtonElement>>(function VhsTriggerButton(
+  { children, onMouseEnter, onMouseLeave, style, ...props },
+  ref,
+) {
   const [isHovered, setIsHovered] = useState(false)
 
   return (
     <button
+      ref={ref}
       type="button"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseEnter={(event) => {
+        setIsHovered(true)
+        onMouseEnter?.(event)
+      }}
+      onMouseLeave={(event) => {
+        setIsHovered(false)
+        onMouseLeave?.(event)
+      }}
       style={{
         position: "relative",
         overflow: "hidden",
@@ -336,9 +351,11 @@ function VhsButton() {
         borderRadius: 0,
         transform: isHovered ? "scale(1.05)" : "scale(1)",
         transition: "all 300ms ease",
+        ...style,
       }}
+      {...props}
     >
-      <span style={{ position: "relative", zIndex: 2 }}>{">"} SAIBA_MAIS {"<"}</span>
+      <span style={{ position: "relative", zIndex: 2 }}>{children ?? <>{">"} SAIBA_MAIS {"<"}</>}</span>
       <span
         style={{
           position: "absolute",
@@ -350,6 +367,89 @@ function VhsButton() {
         }}
       />
     </button>
+  )
+})
+
+function InvitationPopover() {
+  return (
+    <Popover>
+      <PopoverTrigger render={<VhsTriggerButton />}>{">"} SAIBA_MAIS {"<"}</PopoverTrigger>
+
+      <PopoverContent
+        side="top"
+        sideOffset={12}
+        collisionPadding={16}
+        sticky
+        collisionAvoidance={{
+          side: "shift",
+          align: "shift",
+          fallbackAxisSide: "none",
+        }}
+        className="border-0 bg-transparent p-0 shadow-none"
+        style={{
+          width: "min(384px, calc(100vw - 32px))",
+        }}
+      >
+        <div
+          style={{
+            width: "100%",
+            maxHeight: "calc(100vh - 32px)",
+            overflowY: "auto",
+            borderRadius: 14,
+            border: "1px solid rgba(255,255,255,0.10)",
+            background: "#171717",
+            color: "#ffffff",
+            padding: "40px 32px 24px",
+            boxShadow: "0 24px 70px rgba(0, 0, 0, 0.75)",
+            fontFamily: '"Segoe UI", "Trebuchet MS", sans-serif',
+            textAlign: "left",
+          }}
+        >
+          <div style={{ marginBottom: 18 }}>
+            <p style={{ margin: 0, fontSize: 31, lineHeight: 1.1, fontWeight: 600, color: "#ffffff" }}>Alice Lima</p>
+            <p style={{ margin: "8px 0 0", fontSize: 16, lineHeight: 1.4, color: "rgba(255,255,255,0.72)" }}>12 anos</p>
+          </div>
+
+          <div style={{ marginBottom: 18, fontSize: 15, lineHeight: 1.55, color: "#d4d4d4" }}>
+            <p style={{ margin: 0 }}>Dia 21 de Março às 12h30</p>
+          </div>
+
+          <div style={{ marginBottom: 18, fontSize: 15, lineHeight: 1.5, color: "#d4d4d4" }}>
+            <p style={{ margin: 0 }}>
+              Rua Gentil Bitterncourt 954
+              <br />
+              Apartamento 201
+              <br />
+              Edificio Mario Lobato
+            </p>
+          </div>
+
+          <a
+            href={googleMapsHref}
+            target="_blank"
+            rel="noreferrer noopener"
+            style={{
+              display: "inline-flex",
+              width: "100%",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: 12,
+              borderRadius: 10,
+              border: "1px solid rgba(255,255,255,0.10)",
+              background: "rgba(255,255,255,0.03)",
+              padding: "14px 16px",
+              color: "#ffffff",
+              fontSize: 15,
+              fontWeight: 500,
+              textDecoration: "none",
+            }}
+          >
+            <span>Abrir no Google Maps</span>
+            <ArrowUpRight className="size-4" aria-hidden="true" />
+          </a>
+        </div>
+      </PopoverContent>
+    </Popover>
   )
 }
 
@@ -660,7 +760,7 @@ export default function DistortHero() {
           </p>
 
           <div ref={buttonRef} style={{ display: "flex", justifyContent: "center" }}>
-            <VhsButton />
+            <InvitationPopover />
           </div>
         </div>
       </div>
