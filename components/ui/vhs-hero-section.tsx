@@ -416,7 +416,7 @@ function InvitationPopover() {
 
           <div style={{ marginBottom: 18, fontSize: 15, lineHeight: 1.5, color: "#d4d4d4" }}>
             <p style={{ margin: 0 }}>
-              Rua Gentil Bittencourt 954
+              Av. Gentil Bittencourt 954
               <br />
               Apartamento 201
               <br />
